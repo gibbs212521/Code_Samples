@@ -31,6 +31,14 @@ void endProgramFunc(int isSuccessful){
 int main()
 {
 /*        //// ACCEPTS MATRICES UP TO DIMENSION OF :  150 x 150        */
+  // Initial build only contains rudamentary solution.
+  /* My next step are to :
+    1) Build out Odd Magic Square Function Generator.
+    2) Put in sample Even Magic Square arrays.
+    3) Refactor Test Suite.
+    4) TDD to validate and flush out all functions and ensure CI.
+    5) Develop and apply algorithms that are efficent. 
+  */
 
   printf("\n\n----------Beginning Evaulation if Matrix is a Magic Square----------\n\n");
   
