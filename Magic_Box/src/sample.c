@@ -48,11 +48,13 @@ int main()
 
   int expected_matrix[EXPECTED_MATRIX_ROW_COUNT][EXPECTED_MATRIX_ROW_COUNT] = {0};
   
-  int expected_row_count = 4;
-  int expected_column_count = 4;
+  // set expected_row_count to size of respective matrix if using prebuilt data.
+  int expected_row_count = 4; 
+  int expected_column_count = expected_row_count;
 
-    //// If you manually insert a candidate matrix in expected_matrix = {{x,y,...,z},{q,r,...s},...{a,b,...,c}};
-      //    the code will directly process that.
+    //// If you manually insert a candidate matrix in expected_matrix = 
+    //                          {{x,y,...,z},{q,r,...s},...{a,b,...,c}};
+      //    the code will directly process the manual code.
 
   if (expected_matrix[0][0] == 0){
     for (int i=0; i<expected_row_count; i++){
@@ -69,7 +71,8 @@ int main()
       for(int j=0; j<EXPECTED_MATRIX_ROW_COUNT; j++){
         if(expected_matrix[i][j] == 0)
           break;
-        expected_column_count = j+1; /// finding outter most limit of rows & columns
+        /// finding outter most limit of rows & columns
+        expected_column_count = j+1; 
       }
       if(expected_matrix[i][0] == 0)
         break;

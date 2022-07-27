@@ -29,7 +29,7 @@ int getColumnSum(
   return column_sum;
 }
 
-int getDiagnalSum(
+int getDiagonalSum(
     int row_count,
     int matrix[EXPECTED_MATRIX_ROW_COUNT][EXPECTED_MATRIX_ROW_COUNT]
 ){
@@ -52,7 +52,7 @@ int isMagicSquareBruteForce(
   // Initital Evaluations
   int init_row_result, init_column_result;
   int row_result, column_result;
-  int diagonal_result = getDiagnalSum(row_count, matrix);
+  int diagonal_result = getDiagonalSum(row_count, matrix);
   if (diagonal_result == -1)
     return 0;
   init_row_result = getRowSum(row_count,matrix[0]);

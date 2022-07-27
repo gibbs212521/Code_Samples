@@ -22,7 +22,7 @@ int getColumnSum(
     int matrix[EXPECTED_MATRIX_ROW_COUNT][EXPECTED_MATRIX_ROW_COUNT]
 );
 
-int getDiagnalSum(
+int getDiagonalSum(
     int row_count,
     int matrix[EXPECTED_MATRIX_ROW_COUNT][EXPECTED_MATRIX_ROW_COUNT]);
 
