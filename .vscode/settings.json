@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "stdlib.h": "c",
+        "test.h": "c",
+        "test_data.h": "c",
+        "ismagicsquare.h": "c",
+        "matrixanalysis.h": "c",
+        "sample.h": "c",
+        "matricedisplay.h": "c",
+        "matrixgenerator.h": "c",
+        "test_ismagicsquare.h": "c",
+        "test_matrixgenerator.h": "c",
+        "test_matrixanalysis.h": "c"
+    }
+}

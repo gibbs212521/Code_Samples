@@ -1,0 +1,17 @@
+Note this code sample was compiled and run with GCC 6.3 (MinGW) with nmake
+    |  Go to ./linux_build/. directory for linux distriubtions and use Make
+    |  in order to build the appropriate binary in the ./bin/. directory. 
+
+HOW TO RUN PROGRAM
+
+0: If Makefile does not exist at root level (./Magic_Box/) then:
+    |  Copy ./Magic_Box/Blankmake to ./Magic_Box/Makefile
+    |  {B.N.: ./ shall be used for root directory (e.g. mentioned: ./Blankmake)}
+
+1: run nmake at root
+2: run test.exe or sample.exe from ./bin/. directory
+3: If 
+
+test.exe --> console print off of every test suite
+
+
