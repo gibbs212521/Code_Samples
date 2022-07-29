@@ -7,7 +7,7 @@
 #endif
 
 
-void display(int row_count, int column_count, int matrix[EXPECTED_MATRIX_ROW_COUNT][EXPECTED_MATRIX_ROW_COUNT])
+void display(int row_count, int column_count, int matrix[MAX_ROW_COUNT][MAX_ROW_COUNT])
 {
   //// Simple function to make matrices visible
   printf("row : %d \ncol : %d \n\n", row_count, column_count);

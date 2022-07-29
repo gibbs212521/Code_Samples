@@ -5,6 +5,6 @@
 #include <stdio.h>
 
 /// Set matrix row count to any size larger than expected matrix input
-#define EXPECTED_MATRIX_ROW_COUNT 150
+#define MAX_ROW_COUNT 150
 
 #endif

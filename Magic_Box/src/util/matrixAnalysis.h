@@ -15,7 +15,7 @@
 int verifyMatrixSize(
   int row_count,
   int column_count,
-  int matrix[EXPECTED_MATRIX_ROW_COUNT][EXPECTED_MATRIX_ROW_COUNT];
+  int matrix[MAX_ROW_COUNT][MAX_ROW_COUNT];
 );
 
 #endif

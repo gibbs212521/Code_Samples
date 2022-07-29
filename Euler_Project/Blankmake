@@ -17,7 +17,7 @@ DIRPATH=.$(FD)src
 BINPATH=.$(FD)bin
 OBJPATH=.$(FD)obj
 TESTPATH=.$(FD)test
-TEST_BINPATH=$(TESTPATH)$(FD)bin
+TEST_BINPATH=$(BINPATH)
 TEST_OBJPATH=$(TESTPATH)$(FD)obj
 
 FILENAME=euler_project
@@ -94,6 +94,8 @@ IF_FILE=IF EXIST # $(FD)
 THEN_DO= # $(FD)
 IF_NOT_FILE=IF NOT EXIST # $(FD)
 IF_NOT_THEN_DO= # $(FD)
+IF_DIR=$(IF_FILE) # $(FD)
+IF_NOT_DIR=$(IF_NOT_FILE)
 INSERT_FILE= call > # $(FD)
 EMPTY_TXT=empty.txt # $(FD)
 !else
@@ -106,8 +108,10 @@ CP=cp -f #
 MAKE_CALL=make #
 IF_FILE=test -f #
 THEN_DO= && #
-IF_NOT_FILE=test -f #
+IF_NOT_FILE=$(IF_FILE) #
 IF_NOT_THEN_DO= || #
+IF_DIR=test -d # $(FD)
+IF_NOT_DIR=$(IF_DIR) #
 INSERT_FILE= ># 
 EMPTY_TXT=.empty.txt #
 endif #
@@ -121,8 +125,8 @@ endif #
 
 ##### CONSTANT BUILD #######
 MAKE: $(FILEBIN) $(TESTBIN) $(OBJECTS) $(TEST_OBJECTS)
-	$(CC) $(CFLAGS) $(FILEBIN) $(OBJECTS) -o $(FILE_EXE)
 	$(CC) $(CFLAGS) $(TESTBIN) $(OBJECTS) $(TEST_OBJECTS) -o $(TEST_EXE)
+	$(CC) $(CFLAGS) $(FILEBIN) $(OBJECTS) -o $(FILE_EXE)
 	$(MAKE_CALL) clean_up
 
 MAKE_OBJ: $(FILEBIN) $(TESTBIN) $(OBJECTS)
@@ -131,20 +135,20 @@ MAKE_OBJ: $(FILEBIN) $(TESTBIN) $(OBJECTS)
 
 $(FILEBIN): $(CFILE)
 	$(MAKE_CALL) BUILD_DIR
-	$(MAKE_CALL) build
+	$(IF_NOT_FILE) $(OBJ1) $(IF_NOT_THEN_DO) $(MAKE_CALL) build
 	$(MAKE_CALL) BUILD_OBJ
 	$(CC) -c $(CFLAGS) $(CFILE) -o $(FILEBIN)
 
 $(TESTBIN): $(CTEST)
-	$(MAKE_CALL) BUILD_TEST_DIR
-	$(MAKE_CALL) build
+	$(MAKE_CALL) BUILD_DIR
+	$(IF_NOT_FILE) $(TEST_OBJ1) $(IF_NOT_THEN_DO) $(MAKE_CALL) build
 	$(MAKE_CALL) BUILD_OBJ
 	$(CC) -c $(CFLAGS) $(CTEST) -o $(TESTBIN)
 
 
 MAKE_TEST: $(TESTBIN) $(OBJECTS) $(TEST_OBJECTS)
 	$(CC) $(CFLAGS) $(TESTBIN) $(OBJECTS) $(TEST_OBJECTS) -o $(TEST_EXE)
-	$(MAKE_CALL) clean_tests
+	$(MAKE_CALL) clean
 
 MAKE_CORE: $(FILEBIN) $(OBJECTS)
 	$(CC) $(CFLAGS) $(FILEBIN) $(OBJECTS) -o $(FILE_EXE)
@@ -159,16 +163,16 @@ build::
 		@echo( $$(CC) $$(CFLAGS) -c $$(OBJ%%iSRC) -o $$(OBJ%%i)  >> Makefile
 #	nmake only \
 	IF $(TEST_OBJBUILDS) GTR 0 \
-	FOR %%i IN ($(TST_OBJBUILDS))\
+	FOR %%i IN ($(TEST_OBJBUILDS))\
 		DO \
-		@echo( $$(CC) $$(CFLAGS) -c $$(TST_OBJ%%iSRC) -o $$(TST_OBJ%%i)  >> Makefile
+		@echo( $$(CC) $$(CFLAGS) -c $$(TEST_OBJ%%iSRC) -o $$(TEST_OBJ%%i)  >> Makefile
 #	nmake only effective multiline commenting out # \
 	@echo <<
 	for num in $(OBJBUILDS); do \
 		echo "	"$$"(CC)" $$"(CFLAGS)" -c $$"(OBJ"$${num}"SRC)" -o $$"(OBJ"$${num}")" >> Makefile;\
 		done #
-	for num in $(TST_OBJBUILDS); do \
-		echo "	"$$"(CC)" $$"(CFLAGS)" -c $$"(TST_OBJ"$${num}"SRC)" -o $$"(TST_OBJ"$${num}")" >> Makefile;\
+	for num in $(TEST_OBJBUILDS); do \
+		echo "	"$$"(CC)" $$"(CFLAGS)" -c $$"(TEST_OBJ"$${num}"SRC)" -o $$"(TEST_OBJ"$${num}")" >> Makefile;\
 		done #
 #		$(foeach var,$(OBJBUILDS),@echo	$$(CC) $$(CFLAGS) -c $$(OBJ%%iSRC) -o $$(OBJ%%i) >> Makefile;) #
 #	nmake only # \
@@ -180,7 +184,9 @@ fast:
 	$(MAKE_CALL) run
 
 retest:
-	$(MAKE_CALL) clean_tests
+	$(MAKE_CALL) clean_up
+	$(MAKE_CALL) MAKE_TEST
+	$(MAKE_CALL) test
 
 run:
 	$(FILE_EXE)
@@ -191,43 +197,34 @@ test:
 
 clean:
 	$(RM) $(APPS)
-	$(RM) $(BINPATH)$(FD)$(EMPTY_TXT)
-	$(RMDIR) $(BINPATH)
+	$(IF_DIR) $(BINPATH) $(THEN_DO) $(RMDIR) $(BINPATH)
 
 clean_up:
+	$(MAKE_CALL) clean_test
 	$(MAKE_CALL) clean_core
-	$(MAKE_CALL) clean_tests
-	$(RM) $(OBJPATH)$(FD)$(EMPTY_TXT)
-	$(RMDIR) $(OBJPATH)
+	$(IF_DIR) $(OBJPATH) $(THEN_DO) $(RMDIR) $(OBJPATH)
 	
 clean_core:
 	$(IF_FILE) $(FILEBIN) $(THEN_DO) $(RM) $(FILEBIN)
 	$(IF_FILE) $(OBJ1) $(THEN_DO) $(RM) $(OBJECTS)
-	$(IF_FILE) $(OBJPATH)$(FD)$(EMPTY_TXT) $(THEN_DO) $(RM) $(OBJPATH)$(FD)$(EMPTY_TXT)
-	$(RMDIR) $(OBJPATH)
+	$(IF_DIR) $(OBJPATH) $(THEN_DO) $(RMDIR) $(OBJPATH)
 
-clean_tests:
+
+clean_test:
 	$(IF_FILE) $(TESTBIN) $(THEN_DO) $(RM) $(TESTBIN)
 	$(IF_FILE) $(TEST_OBJ1) $(THEN_DO) $(RM) $(TEST_OBJECTS)
-	$(IF_FILE) $(TEST_OBJPATH)$(FD)$(EMPTY_TXT) $(THEN_DO) $(RM) $(TEST_OBJPATH)$(FD)$(EMPTY_TXT)
-	$(RMDIR) $(TEST_OBJPATH)
+	$(IF_DIR) $(TEST_OBJPATH) $(THEN_DO) $(RMDIR) $(TEST_OBJPATH)
+	
 
 clean_all:
 	$(MAKE_CALL) clean_up
 	$(MAKE_CALL) clean
 
 BUILD_DIR:
-	$(IF_NOT_FILE) $(BINPATH)$(FD)$(EMPTY_TXT) $(IF_NOT_THEN_DO) mkdir $(BINPATH)
-	$(IF_NOT_FILE) $(BINPATH)$(FD)$(EMPTY_TXT) $(IF_NOT_THEN_DO) $(INSERT_FILE) $(BINPATH)$(FD)$(EMPTY_TXT)
-	$(IF_NOT_FILE) $(OBJPATH)$(FD)$(EMPTY_TXT) $(IF_NOT_THEN_DO) mkdir $(OBJPATH)
-	$(IF_NOT_FILE) $(OBJPATH)$(FD)$(EMPTY_TXT) $(IF_NOT_THEN_DO) $(INSERT_FILE) $(OBJPATH)$(FD)$(EMPTY_TXT)
+	$(IF_NOT_DIR) $(BINPATH) $(IF_NOT_THEN_DO) mkdir $(BINPATH)
+	$(IF_NOT_DIR) $(OBJPATH) $(IF_NOT_THEN_DO) mkdir $(OBJPATH)
+	$(IF_NOT_DIR) $(TEST_OBJPATH) $(IF_NOT_THEN_DO) mkdir $(TEST_OBJPATH)
 
-BUILD_TEST_DIR:
-	$(IF_NOT_FILE) $(TEST_BINPATH)$(FD)$(EMPTY_TXT) $(IF_NOT_THEN_DO) mkdir $(TEST_BINPATH)
-	$(IF_NOT_FILE) $(TEST_BINPATH)$(FD)$(EMPTY_TXT) $(IF_NOT_THEN_DO) $(INSERT_FILE) $(TEST_BINPATH)$(FD)$(EMPTY_TXT)
-	$(IF_NOT_FILE) $(TEST_OBJPATH)$(FD)$(EMPTY_TXT) $(IF_NOT_THEN_DO) mkdir $(TEST_OBJPATH)
-	$(IF_NOT_FILE) $(TEST_OBJPATH)$(FD)$(EMPTY_TXT) $(IF_NOT_THEN_DO) $(INSERT_FILE) $(TEST_OBJPATH)$(FD)$(EMPTY_TXT)
-	
 BUILD_OBJ:
 	@echo building...
 #####	VARIABLE BUILD	#####

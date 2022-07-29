@@ -46,7 +46,7 @@ int main()
   int matrix_is_square;
   int matrix_is_magic_square;
 
-  int expected_matrix[EXPECTED_MATRIX_ROW_COUNT][EXPECTED_MATRIX_ROW_COUNT] = {0};
+  int expected_matrix[MAX_ROW_COUNT][MAX_ROW_COUNT] = {0};
   
   // set expected_row_count to size of respective matrix if using prebuilt data.
   int expected_row_count = 4; 
@@ -66,9 +66,9 @@ int main()
       }
     }
   } else {
-    for(int i=0; i<EXPECTED_MATRIX_ROW_COUNT; i++)
+    for(int i=0; i<MAX_ROW_COUNT; i++)
     {
-      for(int j=0; j<EXPECTED_MATRIX_ROW_COUNT; j++){
+      for(int j=0; j<MAX_ROW_COUNT; j++){
         if(expected_matrix[i][j] == 0)
           break;
         /// finding outter most limit of rows & columns

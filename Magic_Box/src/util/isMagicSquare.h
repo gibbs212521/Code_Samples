@@ -13,22 +13,22 @@
 
 int getRowSum(
     int row_count,
-    int matrix_row[EXPECTED_MATRIX_ROW_COUNT]
+    int matrix_row[MAX_ROW_COUNT]
 );
 
 int getColumnSum(
     int row_count,
     int given_column,
-    int matrix[EXPECTED_MATRIX_ROW_COUNT][EXPECTED_MATRIX_ROW_COUNT]
+    int matrix[MAX_ROW_COUNT][MAX_ROW_COUNT]
 );
 
 int getDiagonalSum(
     int row_count,
-    int matrix[EXPECTED_MATRIX_ROW_COUNT][EXPECTED_MATRIX_ROW_COUNT]);
+    int matrix[MAX_ROW_COUNT][MAX_ROW_COUNT]);
 
 int isMagicSquareBruteForce(
   int row_count,
-  int matrix[EXPECTED_MATRIX_ROW_COUNT][EXPECTED_MATRIX_ROW_COUNT]
+  int matrix[MAX_ROW_COUNT][MAX_ROW_COUNT]
 );
 
 #endif

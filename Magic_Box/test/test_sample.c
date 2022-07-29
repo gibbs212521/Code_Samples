@@ -59,7 +59,7 @@ int main()
   // printf("expected row count a: %d\n\n", expected_column_count);
   // printf("expected row count b: %d\n\n", expected_row_count);
   // printf("%s\n\n", argv[1]);
-  // int expected_matrix[EXPECTED_MATRIX_ROW_COUNT][EXPECTED_MATRIX_ROW_COUNT] = {0};
+  // int expected_matrix[MAX_ROW_COUNT][MAX_ROW_COUNT] = {0};
   // int expected_matrix[3][3] = {0};
   
 
