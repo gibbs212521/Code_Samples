@@ -1,15 +1,17 @@
 #include "test.h"
 
-void runTest(bool condition, char class_method[], char test_case[], bool * ptest_passed)
+
+void runTest(bool condition, char method_tested[], char test_case[], bool * ptest_passed)
 {
     if(condition == true)
-        printf("\t %s \t %s \t PASSED\n",class_method, test_case);
+        printf("   %s \t %s \t PASSED\n",method_tested, test_case);
     else
     {
-        printf("\n\n\n\t %s \t %s \t FAILED\n",class_method, test_case);
+        printf("\n\n\n   %s \t %s \t FAILED\n",method_tested, test_case);
         *ptest_passed = false;
     }
 }
+
 
 void testResult(char test_name[], bool test_passed)
 {

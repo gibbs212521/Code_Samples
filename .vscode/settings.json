@@ -10,6 +10,8 @@
         "matrixgenerator.h": "c",
         "test_ismagicsquare.h": "c",
         "test_matrixgenerator.h": "c",
-        "test_matrixanalysis.h": "c"
+        "test_matrixanalysis.h": "c",
+        "test_base.h": "c",
+        "stdio.h": "c"
     }
 }
