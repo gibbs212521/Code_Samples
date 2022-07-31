@@ -32,10 +32,10 @@ void test_1_FILO_stack_evaluation(){
     char test_case[30] = "Basic Initialization Case    ";
 //  char _method_guide[30] = "                         ";
     char method_tested[30] = "Stack.initialize         ";
-    if (stack.FILO_stack){
-    bool condition = false;
+    if (stack.FILO_stack == NULL){
+    condition = true;
     } else {
-    bool condition = true;
+    condition = false;
     }
     runTest(condition, method_tested, test_case, &test_passed);
 
@@ -92,6 +92,41 @@ void test_1_FILO_stack_evaluation(){
         && (stack.stack_depth == depth_goal));
     runTest(condition, method_tested, test_case, &test_passed);
 
+    /// CASE 7
+    depth_start = depth_goal;
+    for (int i=depth_start-1; i >= 0; i--)
+        stack.pop(&stack);
+    top_value = stack.pop(&stack);
+//  strcpy(_t_guide_,"        \     \                ");
+    strcpy(test_case,"Popping \"NULL\" Without Stack ");
+    strcpy(method_tested,"Stack.pop                ");
+    condition = ((stack.getTopValue(&stack) == MIN_INT_VAL)
+        && (top_value == MIN_INT_VAL));
+    runTest(condition, method_tested, test_case, &test_passed);
+
+    /// CASE 8
+    depth_goal = 5;
+    for (int i=1; i <= depth_goal; i++)
+        stack.push(&stack,i);
+    stack.shift(&stack);
+    condition = true;
+    for (int i=depth_goal-1; i <= 0; i--)
+    {
+        top_value = stack.pop(&stack);
+        if (i) // index ends at 0
+        {
+            condition = condition && (top_value == i);
+        } else {
+            condition = condition && (top_value == depth_goal);
+        }
+    }
+//  strcpy(_t_guide_,"                             ");
+    strcpy(test_case,"Shift & Collect Elements     ");
+    strcpy(method_tested,"Stack.shift              ");
+    condition = ((stack.getTopValue(&stack) == MIN_INT_VAL)
+        && condition);
+    runTest(condition, method_tested, test_case, &test_passed);
+
 
     /// CLOSING STATEMENTS
     testResult(test_name, test_passed);
@@ -109,14 +144,12 @@ void test_2_FIFO_stack_evaluation(){
 //  char _t_guide_[30] = "                             "
     char test_case[30] = "Basic Initialization Case    ";
     char method_tested[30] = "Stack.initialize         ";
-    if (stack.FIFO_stack){
-    bool condition = false;
+    if (stack.FIFO_stack == NULL){
+    condition = true;
     } else {
-    bool condition = true;
+    condition = false;
     }
     runTest(condition, method_tested, test_case, &test_passed);
-
-
 
     /// CASE 2
     stack.push(&stack,4);
@@ -144,14 +177,14 @@ void test_2_FIFO_stack_evaluation(){
 
     /// CASE 5
     short depth_goal = 13;
-    for (int i=1; i <= depth_goal; i++)
+    for (int i=depth_goal; i > 0; i--)
         stack.push(&stack, i);
 //  strcpy(_t_guide_,"                             ");
     strcpy(test_case,"Stack Depth via Push         ");
-//  strcpy(_method_guide,"                         ");
     strcpy(method_tested,"Stack.push               ");
     condition = ((stack.getBottomValue(&stack) == depth_goal)
-        && (stack.stack_depth == depth_goal));
+        && (stack.stack_depth == depth_goal)
+        && (stack.top_ptr->data == 1));
     runTest(condition, method_tested, test_case, &test_passed);
 
     /// CASE 6
@@ -161,10 +194,44 @@ void test_2_FIFO_stack_evaluation(){
         stack.pop(&stack);
 //  strcpy(_t_guide_,"                             ");
     strcpy(test_case,"Stack Depth via Push & Pop   ");
-//  strcpy(_method_guide,"                         ");
     strcpy(method_tested,"Stack.pop                ");
     condition = ((stack.getBottomValue(&stack) == depth_goal)
         && (stack.stack_depth == depth_goal));
+    runTest(condition, method_tested, test_case, &test_passed);
+
+    /// CASE 7
+    depth_start = depth_goal;
+    for (int i=depth_start-1; i >= 0; i--)
+        stack.pop(&stack);
+    bottom_value = stack.pop(&stack);
+//  strcpy(_t_guide_,"        \     \                ");
+    strcpy(test_case,"Popping \"NULL\" Without Stack ");
+    strcpy(method_tested,"Stack.pop                ");
+    condition = ((stack.getBottomValue(&stack) == MIN_INT_VAL)
+        && (bottom_value == MIN_INT_VAL));
+    runTest(condition, method_tested, test_case, &test_passed);
+
+    /// CASE 8
+    depth_goal = 5;
+    for (int i=depth_goal; i > 0; i--)
+        stack.push(&stack,i);
+    stack.shift(&stack);
+    condition = true;
+    for (int i=depth_goal-1; i <= 0; i--)
+    {
+        bottom_value = stack.pop(&stack);
+        if (i) // index ends at 0
+        {
+            condition = condition && (bottom_value == i);
+        } else {
+            condition = condition && (bottom_value == depth_goal);
+        }
+    }
+//  strcpy(_t_guide_,"                             ");
+    strcpy(test_case,"Shift & Collect Elements     ");
+    strcpy(method_tested,"Stack.shift              ");
+    condition = ((stack.getBottomValue(&stack) == MIN_INT_VAL)
+        && condition);
     runTest(condition, method_tested, test_case, &test_passed);
 
 

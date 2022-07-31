@@ -2,10 +2,10 @@
 #define __TST_project_H__
 #ifdef _WIN32
 #include ".\..\test.h"
-#include ".\..\..\src\project\base.h"
+#include ".\..\..\src\util\base.h"
 #elif __linux__
 #include "./../test.h"
-#include "./../../src/project/base.h"
+#include "./../../src/util/base.h"
 #endif
 
 #include <string.h>

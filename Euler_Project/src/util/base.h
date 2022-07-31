@@ -7,13 +7,13 @@
 
 
 
-struct StackFILO
+struct Stack
 {
     int data;
-    struct StackFILO * top_ptr;
+    struct Stack * next_ptr;
 };
 
-typedef struct StackFILO *stack_ptr;
+typedef struct Stack *stack_ptr;
 
 struct StackHandler
 {
@@ -26,8 +26,8 @@ struct StackHandler
     short _shift_state;  // DEV PLACEHOLDEER 
 
     /// Class Pointers
-    struct StackFILO * FILO_stack;
-    // struct StackFIFO * FIFO_stack;
+    struct Stack * FILO_stack;
+    struct Stack * bottom_ptr;
     
     /// Class Method Vectors
     int (*getTopValue)(struct StackHandler * this);
@@ -39,7 +39,7 @@ struct StackHandler
 };
 
 
-void buildFILOStack(struct StackFILO * this);
+void buildFILOStack(struct Stack * this);
 void initializeStack(struct StackHandler * this);
 
 int __get_top_stack_value__(struct StackHandler * this);
@@ -51,13 +51,6 @@ void __FILO_stack_shift_up__(struct StackHandler * this);
 void __FILO_stack_shift_down__(struct StackHandler * this);
 
 
-struct StackFIFO
-{
-    int data;
-    struct StackFIFO * top_ptr;
-    struct StackFIFO * bottom_ptr;
-};
-typedef struct StackFIFO * inv_stack_ptr;
 
 struct InvStackHandler
 {
@@ -70,8 +63,9 @@ struct InvStackHandler
     short _shift_state;  // DEV PLACEHOLDEER --> delete once testing is complete
 
     /// Class Pointers
-    // struct StackFILO * FILO_stack;
-    struct StackFIFO * FIFO_stack;
+    // struct Stack * FILO_stack;
+    struct Stack * FIFO_stack;
+    struct Stack * top_ptr;
     
     /// Class Method Vectors
     int (*getBottomValue)(struct InvStackHandler * this);
@@ -83,7 +77,7 @@ struct InvStackHandler
 };
 
 
-void buildFIFOStack(struct StackFIFO * this);
+void buildFIFOStack(struct Stack * this);
 void initializeInvStack(struct InvStackHandler * this);
 
 int __get_bottom_stack_value__(struct InvStackHandler * this);

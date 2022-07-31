@@ -15,8 +15,13 @@ void runTest(bool condition, char method_tested[], char test_case[], bool * ptes
 
 void testResult(char test_name[], bool test_passed)
 {
-    if(test_passed==true)
-        printf("\t\t\t\t\t\t\t\t\t PASSED    %s\n", test_name);
-    else
-        printf("\t\t\t\t\t\t\t\t\t FAILED    %s\n\n\n\n", test_name);
+    char dotted_line[120] = " --------------------------------------------------------------------------------------------------------------";
+    char Xed_row[120] =    "  X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X ";
+    if(test_passed==true){
+        printf("%s\n",dotted_line);
+        printf("\t\t\t\t\t\t\t\t\t PASSED    %s\n%s\n", test_name, dotted_line);
+    } else {
+        printf("\n%s\n%s\n",dotted_line, Xed_row);
+        printf("\t\t\t\t\t\t\t\t\t FAILED    %s\n%s\n%s\n\n", test_name, Xed_row, dotted_line);
+    }
 }

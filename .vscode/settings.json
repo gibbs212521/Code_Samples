@@ -12,6 +12,8 @@
         "test_matrixgenerator.h": "c",
         "test_matrixanalysis.h": "c",
         "test_base.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "nextprime.h": "c",
+        "base.h": "c"
     }
 }

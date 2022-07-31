@@ -45,12 +45,13 @@ APPS = $(APPS) $(FILE_EXE)
 
 
 ##### VARYING FILE BOILER PLATE #######
+UTIL_PATH=$(DIRPATH)$(FD)util
 PROJECT_PATH=$(DIRPATH)$(FD)project
 BASENAME=project
 
 
 OBJ1NAME=base
-OBJ1SRC=$(PROJECT_PATH)$(FD)$(OBJ1NAME).c
+OBJ1SRC=$(UTIL_PATH)$(FD)$(OBJ1NAME).c
 OBJ1=$(OBJPATH)$(FD)$(OBJ1NAME).o
 
 SOURCES = $(SOURCES) $(OBJ1SRC)
@@ -64,7 +65,16 @@ OBJ2=$(OBJPATH)$(FD)$(OBJ2NAME).o
 
 SOURCES = $(SOURCES) $(OBJ2SRC)
 OBJECTS = $(OBJECTS) $(OBJ2)
-OBJBUILDS = 2
+OBJBUILDS = $(OBJBUILDS) 2
+
+
+OBJ3NAME=nextPrime
+OBJ3SRC=$(UTIL_PATH)$(FD)$(OBJ3NAME).c
+OBJ3=$(OBJPATH)$(FD)$(OBJ3NAME).o
+
+SOURCES = $(SOURCES) $(OBJ3SRC)
+OBJECTS = $(OBJECTS) $(OBJ3)
+OBJBUILDS = $(OBJBUILDS) 3
 
 
 
@@ -76,10 +86,11 @@ TEST_OBJ1=$(TEST_OBJPATH)$(FD)$(TEST_OBJ1NAME).o
 
 SOURCES = $(SOURCES) $(TEST_OBJ1SRC)
 TEST_OBJECTS = $(TEST_OBJECTS) $(TEST_OBJ1)
-TEST_OBJBUILDS = 1
+TEST_OBJBUILDS =  1
 
 
 TEST_PROJECT_PATH=$(TESTPATH)$(FD)project
+TEST_UTIL_PATH=$(TESTPATH)$(FD)util
 
 TEST_OBJ2NAME=test_$(OBJ1NAME)
 TEST_OBJ2SRC=$(TEST_PROJECT_PATH)$(FD)$(TEST_OBJ2NAME).c
@@ -87,16 +98,16 @@ TEST_OBJ2=$(TEST_OBJPATH)$(FD)$(TEST_OBJ2NAME).o
 
 SOURCES = $(SOURCES) $(TEST_OBJ2SRC)
 TEST_OBJECTS = $(TEST_OBJECTS) $(TEST_OBJ2)
-TEST_OBJBUILDS = 2
+TEST_OBJBUILDS = $(TEST_OBJBUILDS)  2
 
 
-TEST_OBJ3NAME=test_$(OBJ2NAME)
-TEST_OBJ3SRC=$(TEST_PROJECT_PATH)$(FD)$(TEST_OBJ3NAME).c
+TEST_OBJ3NAME=test_$(OBJ3NAME)
+TEST_OBJ3SRC=$(TEST_UTIL_PATH)$(FD)$(TEST_OBJ3NAME).c
 TEST_OBJ3=$(TEST_OBJPATH)$(FD)$(TEST_OBJ3NAME).o
 
-#SOURCES = $(SOURCES) $(TEST_OBJ3SRC)
-#TEST_OBJECTS = $(TEST_OBJECTS) $(TEST_OBJ3)
-#TEST_OBJBUILDS = 3
+SOURCES = $(SOURCES) $(TEST_OBJ3SRC)
+TEST_OBJECTS = $(TEST_OBJECTS) $(TEST_OBJ3)
+TEST_OBJBUILDS = $(TEST_OBJBUILDS) 3
 
 
 
@@ -185,15 +196,13 @@ retest: $(TESTBIN) $(OBJECTS) $(TEST_OBJECTS)
 build:
 	$(CP) blankmake Makefile
 # $(MAKE_CALL) code here \
-	IF $(OBJBUILDS) GTR 0 \
-	FOR %%i IN (1,1,$(OBJBUILDS))\
+	FOR %i IN ($(OBJBUILDS))\
 		DO \
-		echo( $$(CC) $$(CFLAGS) -c $$(OBJ%%iSRC) -o $$(OBJ%%i)  >> Makefile
+		@echo( $$(CC) $$(CFLAGS) -c $$(OBJ%%iSRC) -o $$(OBJ%%i)  >> Makefile
 #	nmake only \
-	IF $(TEST_OBJBUILDS) GTR 0 \
-	FOR %%i IN (1,1,$(TEST_OBJBUILDS))\
+	FOR %%i IN ($(TEST_OBJBUILDS))\
 		DO \
-		echo( $$(CC) $$(CFLAGS) -c $$(TEST_OBJ%%iSRC) -o $$(TEST_OBJ%%i)  >> Makefile
+		@echo( $$(CC) $$(CFLAGS) -c $$(TEST_OBJ%%iSRC) -o $$(TEST_OBJ%%i)  >> Makefile
 #	nmake only effective multiline commenting out # \
 	@echo <<
 	for num in $(OBJBUILDS); do \
@@ -222,14 +231,38 @@ clean_up:
 	$(MAKE_CALL) clean_core
 	
 clean_core:
+# $(MAKE_CALL) code here \
+	FOR %i IN ($(OBJECTS))\
+		DO \
+		$(IF_FILE) %i $(THEN_DO) $(RM) %i
+#	nmake only effective multiline commenting out # \
+	@echo <<
+#	make code here
+	for num in $(TEST_OBJBUILDS); do \
+		echo "  "$$(IF_FILE) $$(OBJ$${num}) $$(THEN_DO) $$(RM) $$(OBJ$${num});\
+		done #
+#		$(foeach var,$(OBJBUILDS),@echo	$$(CC) $$(CFLAGS) -c $$(OBJ%%iSRC) -o $$(OBJ%%i) >> Makefile;) #
+#	nmake only # \
+<<NOKEEP
 	$(IF_FILE) $(FILEBIN) $(THEN_DO) $(RM) $(FILEBIN)
-	$(IF_FILE) $(OBJ1) $(THEN_DO) $(RM) $(OBJECTS)
 	$(IF_DIR) $(OBJPATH) $(THEN_DO) $(RMDIR) $(OBJPATH)
 
 
 clean_test:
+# $(MAKE_CALL) code here \
+	FOR %i IN ($(TEST_OBJECTS))\
+		DO \
+		$(IF_FILE) %i $(THEN_DO) $(RM) %i
+#	nmake only effective multiline commenting out # \
+	@echo <<
+#	make code here
+	for num in $(TEST_OBJBUILDS); do \
+		echo "  "$$(IF_FILE) $$(TEST_OBJ$${num}) $$(THEN_DO) $$(RM) $$(TEST_OBJ$${num});\
+		done #
+#		$(foeach var,$(OBJBUILDS),@echo	$$(CC) $$(CFLAGS) -c $$(OBJ%%iSRC) -o $$(OBJ%%i) >> Makefile;) #
+#	nmake only # \
+<<NOKEEP
 	$(IF_FILE) $(TESTBIN) $(THEN_DO) $(RM) $(TESTBIN)
-	$(IF_FILE) $(TEST_OBJ1) $(THEN_DO) $(RM) $(TEST_OBJECTS)
 	$(IF_DIR) $(TEST_OBJPATH) $(THEN_DO) $(RMDIR) $(TEST_OBJPATH)
 	
 

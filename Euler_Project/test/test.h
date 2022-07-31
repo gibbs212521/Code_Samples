@@ -5,9 +5,9 @@
 
 #ifndef __SAMPLE_MAIN_H__
 #ifdef _WIN32
-#include ".\..\src\project\base.h"
+#include ".\..\src\util\base.h"
 #elif __linux__
-#include "./../src/project/base.h"
+#include "./../src/util/base.h"
 #endif
 #endif
 
