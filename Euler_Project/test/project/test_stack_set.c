@@ -1,6 +1,6 @@
-#include "test_base.h"
+#include "test_stack_set.h"
 
-void base_test_suite(){
+void stack_set_test_suite(){
     linked_list_test_suite();
 }
 
@@ -110,7 +110,7 @@ void test_1_FILO_stack_evaluation(){
         stack.push(&stack,i);
     stack.shift(&stack);
     condition = true;
-    for (int i=depth_goal-1; i <= 0; i--)
+    for (int i=depth_goal-1; i >= 0; i--)
     {
         top_value = stack.pop(&stack);
         if (i) // index ends at 0
@@ -127,6 +127,38 @@ void test_1_FILO_stack_evaluation(){
         && condition);
     runTest(condition, method_tested, test_case, &test_passed);
 
+    /// CASE 9
+    depth_goal = 5;
+    for (int i=1; i <= depth_goal; i++)
+        stack.push(&stack,i);
+    stack.unshift(&stack);
+    condition = true;
+    for (int i=0; i < depth_goal; i++)
+    {
+        top_value = stack.pop(&stack);
+        if (i) // index starts at 0
+        {
+            condition = condition && (top_value == depth_goal-i+1);
+        } else {
+            condition = condition && (top_value == 1);
+        }
+    }
+//  strcpy(_t_guide_,"                             ");
+    strcpy(test_case,"Shift & Collect Elements     ");
+    strcpy(method_tested,"Stack.shift              ");
+    condition = ((stack.getTopValue(&stack) == MIN_INT_VAL)
+        && condition);
+    runTest(condition, method_tested, test_case, &test_passed);
+    // unshift 
+
+    /// CASE 10
+    // full cycle shift
+
+    /// CASE 11
+    // full cycle unshift
+
+    /// CASE 12
+    // 30 % shift 10 % unshift case == 70 % shift 50 % unshift
 
     /// CLOSING STATEMENTS
     testResult(test_name, test_passed);
@@ -217,7 +249,7 @@ void test_2_FIFO_stack_evaluation(){
         stack.push(&stack,i);
     stack.shift(&stack);
     condition = true;
-    for (int i=depth_goal-1; i <= 0; i--)
+    for (int i=depth_goal-1; i >= 0; i--)
     {
         bottom_value = stack.pop(&stack);
         if (i) // index ends at 0
@@ -233,6 +265,36 @@ void test_2_FIFO_stack_evaluation(){
     condition = ((stack.getBottomValue(&stack) == MIN_INT_VAL)
         && condition);
     runTest(condition, method_tested, test_case, &test_passed);
+
+    /// CASE 9
+    depth_goal = 5;
+    for (int i=depth_goal; i > 0; i--)
+        stack.push(&stack,i);
+    stack.unshift(&stack);
+    condition = true;
+    for (int i=0; i < depth_goal; i++)
+    {
+        bottom_value = stack.pop(&stack);
+        if (i) // index starts at 0
+            condition = condition && (bottom_value == depth_goal-i+1);
+        else
+            condition = condition && (bottom_value == 1);
+    }
+//  strcpy(_t_guide_,"                             ");
+    strcpy(test_case,"Unshift & Collect Elements   ");
+    strcpy(method_tested,"Stack.unshift            ");
+    condition = ((stack.getBottomValue(&stack) == MIN_INT_VAL)
+        && condition);
+    runTest(condition, method_tested, test_case, &test_passed);
+
+    /// CASE 10
+    // full cycle shift
+
+    /// CASE 11
+    // full cycle unshift
+
+    /// CASE 12
+    // 30 % shift 10 % unshift case == 70 % shift 50 % unshift
 
 
     /// CLOSING STATEMENTS
@@ -256,7 +318,7 @@ void test_3_general_stack_evaluation(){
     // int top_set[4] = {40,30,20,10};
     // int bottom_set[3] = {3,2,1};
     // if (top_stack_length == bottom_stack_length){
-    //     printf("CASE 12 of test_base.c requires top_stack_length != bottom_stack_length");
+    //     printf("CASE 12 of test_stack_set.c requires top_stack_length != bottom_stack_length");
     // }
 
     // for (int i=0; i<top_stack_length; i++)

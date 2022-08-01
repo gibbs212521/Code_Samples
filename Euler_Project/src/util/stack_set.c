@@ -1,4 +1,4 @@
-#include "base.h"
+#include "stack_set.h"
 
 
 
@@ -12,6 +12,8 @@ void initializeStack(struct StackHandler * this)
     this -> getTopValue = __get_top_stack_value__;
     this -> push = __FILO_stack_push__;
     this -> pop = __FILO_stack_pop__;
+    this -> shift = __FILO_stack_shift_up__;
+    this -> unshift = __FILO_stack_shift_down__;
 }
 void initializeInvStack(struct InvStackHandler * this)
 {
@@ -23,6 +25,8 @@ void initializeInvStack(struct InvStackHandler * this)
     this -> getBottomValue = __get_bottom_stack_value__;
     this -> push = __FIFO_stack_push__;
     this -> pop = __FIFO_stack_pop__;
+    this -> shift = __FIFO_stack_shift_down__;
+    this -> unshift = __FIFO_stack_shift_up__;
 }
 
 
@@ -55,20 +59,24 @@ void __FILO_stack_push__(struct StackHandler * this, int value)
 
     pushed_ptr = malloc(sizeof(stack_ptr));
 
-    if(pushed_ptr != NULL)
+    if(pushed_ptr == NULL)
     {
-        pushed_ptr -> data = value;
-        pushed_ptr -> next_ptr = this->FILO_stack;
-        if (this -> FILO_stack == NULL)
-        {
-            this->bottom = value;
-            this->bottom_ptr = pushed_ptr;
-        } else {
-
-        }
-        this -> FILO_stack = pushed_ptr;
-        this -> stack_depth++;
+        free(pushed_ptr);
+        return;
     }
+
+    pushed_ptr -> data = value;
+    pushed_ptr -> next_ptr = this->FILO_stack;
+    if (this -> FILO_stack == NULL)
+    {
+        this->bottom = value;
+        this->bottom_ptr = pushed_ptr;
+    } else {
+
+    }
+    this -> FILO_stack = pushed_ptr;
+    this -> stack_depth++;
+
 }
 
 int __FILO_stack_pop__(struct StackHandler * this)
@@ -99,21 +107,25 @@ void __FIFO_stack_push__(struct InvStackHandler * this, int value)
 
     pushed_ptr = malloc(sizeof(stack_ptr));
 
-    if(pushed_ptr != NULL)
+    if (pushed_ptr == NULL)
     {
-        pushed_ptr -> data = value;
-        pushed_ptr->next_ptr = NULL;
-
-        if (this -> FIFO_stack == NULL)
-        {
-            this->FIFO_stack = pushed_ptr;
-        } else {
-            this->top_ptr->next_ptr = pushed_ptr;
-        }
-        this->top_ptr = pushed_ptr;
-        this->top = value;
-        this -> stack_depth++;
+        free(pushed_ptr);
+        return;
     }
+    
+    pushed_ptr -> data = value;
+    pushed_ptr->next_ptr = NULL;
+
+    if (this -> FIFO_stack == NULL)
+    {
+        this->FIFO_stack = pushed_ptr;
+    } else {
+        this->top_ptr->next_ptr = pushed_ptr;
+    }
+    this->top_ptr = pushed_ptr;
+    this->top = value;
+    this -> stack_depth++;
+
 }
 
 int __FIFO_stack_pop__(struct InvStackHandler * this)
@@ -143,37 +155,65 @@ int __FIFO_stack_pop__(struct InvStackHandler * this)
 void __FILO_stack_shift__(struct StackHandler * this, bool is_to_shift_up)
 {
     /// APPROACH                |-------|
-/*  |-------| --> PUSH(POP())-->|  TOP  |       POP(PUSH())     |-------|
+/*  |-------| --> PUSH(POP())-->|  TOP  |       PUSH(POP())     |-------|
     |  TOP  |                   |-------|       W/ FOR LOOP ^   |  MID  |
     |-------|   |\/\_/\/|  -->   PUSH(POP())    |-------|  |    |-------|
     |  MID  |   |  MID  |        W/ FOR LOOP ^  |  BOT  |  |__\ |  BOT  |
     |-------|   |-------|   |\/\_/\/|    |____\ |-------|     / |-------|
     |  BOT  |   |  BOT  |   |  BOT  |         / |  MID  |       |  TOP  |
     |-------|   |-------|   |-------|           |-------|       |-------|
+       ^ &this->stack ^   &this->stack    temp_handle.stack    &this->stack
 */
+    /// Argument
+/*
+    If constant shifting is required, consider utilizing a static/dynamic
+    array where you shift do a rewrite of all elements with a paralell 
+    read_clipped_end -> store_clipped_end -> Start Parallel Operation:
+    read -> store -> verify -> write -> free(store) OPERAND-Function
+        OR
+    Parallel Operation: for (int n=1;n<len;n++) Copy(arr[n],arr[n-1])
+    w/ serial operation.
+    A stack shines when you need a simple and fast sequence using either
+    FIFO or FILO sequences.
+*/
+
+    if (this->bottom_ptr == NULL)
+        return; // If the stack is empty, cannot shift
+
     int popped_value;
+    int temp_popped_value;
+
     stack_ptr popped_ptr;
     stack_ptr rolling_ptr;
-    
-    
-    if(is_to_shift_up){
-        if (this->bottom_ptr == NULL)
-        {
-            free(popped_ptr);
-            return;
-        }
-        this->_shift_state += 1;
 
-        popped_ptr = this->bottom_ptr;
-        popped_value = (popped_ptr)->data;
-        this->bottom_ptr = NULL;
-        free(popped_ptr);
+    struct StackHandler *ptr_handle;
 
+    ptr_handle = malloc(sizeof(struct  StackHandler));
+    initializeStack(ptr_handle);
 
-    } else {
-        this->_shift_state -= 1;
+    if (ptr_handle == NULL)
+    {
+        free(ptr_handle);
+        return;
     }
-    
+
+    if(is_to_shift_up){
+        popped_value = this->pop(this);
+        while (this->stack_depth)
+            ptr_handle->push(ptr_handle, this->pop(this));
+        this->push(this, popped_value);
+        while (ptr_handle->stack_depth)
+            this->push(this, ptr_handle->pop(ptr_handle));
+    } else {
+        while (this->stack_depth>1)
+            ptr_handle->push(ptr_handle, this->pop(this));
+        popped_value = this->pop(this);
+        while (ptr_handle->stack_depth)
+            this->push(this, ptr_handle->pop(ptr_handle));            
+        this->push(this, popped_value);
+    }
+
+    free(ptr_handle);
 }
 void __FILO_stack_shift_up__(struct StackHandler * this)
 {
@@ -189,14 +229,33 @@ void __FILO_stack_shift_down__(struct StackHandler * this)
 
 void __FIFO_stack_shift__(struct InvStackHandler * this, bool is_to_shift_down)
 {
-    // int top
-    // int tmp_pop_val;
-    // stack_ptr tmp_ptr;
-    if(is_to_shift_down){
-        this->_shift_state += 1;
-    } else {
-        this->_shift_state -= 1;
+
+    if (this->top_ptr == NULL)
+        return; // If the stack is empty, cannot shift
+
+    int popped_value;
+
+    struct InvStackHandler *ptr_handle;
+
+    ptr_handle = malloc(sizeof(struct  InvStackHandler));
+    initializeInvStack(ptr_handle);
+
+    if (ptr_handle == NULL)
+    {
+        free(ptr_handle);
+        printf("__FIFO_stack_shift__ malloc failed");
+        return;
     }
+
+    if (is_to_shift_down == 0){
+        while (this->stack_depth>1)
+            ptr_handle->push(ptr_handle, this->pop(this));
+        while (ptr_handle->stack_depth)
+            this->push(this, ptr_handle->pop(ptr_handle));
+    } else
+        this->push(this,this->pop(this));
+
+    free(ptr_handle);
 }
 void __FIFO_stack_shift_down__(struct InvStackHandler * this)
 {

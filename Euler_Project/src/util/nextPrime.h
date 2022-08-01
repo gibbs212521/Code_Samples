@@ -1,9 +1,9 @@
 #ifndef __NEXT_PRIME_UTIL_H__
 #define __NEXT_PRIME_UTIL_H__
 #ifdef _WIN32
-#include ".\base.h"
+#include ".\stack_set.h"
 #elif __linux__
-#include "./base.h"
+#include "./stack_set.h"
 #endif
 
 

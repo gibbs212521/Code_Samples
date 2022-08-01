@@ -2,16 +2,16 @@
 #define __TST_project_H__
 #ifdef _WIN32
 #include ".\..\test.h"
-#include ".\..\..\src\util\base.h"
+#include ".\..\..\src\util\stack_set.h"
 #elif __linux__
 #include "./../test.h"
-#include "./../../src/util/base.h"
+#include "./../../src/util/stack_set.h"
 #endif
 
 #include <string.h>
 
 
-void base_test_suite();
+void stack_set_test_suite();
 
 void linked_list_test_suite();
 

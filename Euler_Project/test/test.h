@@ -5,9 +5,9 @@
 
 #ifndef __SAMPLE_MAIN_H__
 #ifdef _WIN32
-#include ".\..\src\util\base.h"
+#include ".\..\src\util\stack_set.h"
 #elif __linux__
-#include "./../src/util/base.h"
+#include "./../src/util/stack_set.h"
 #endif
 #endif
 
