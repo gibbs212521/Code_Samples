@@ -2,20 +2,11 @@
 #define __TEST_APP_BASE_H__
 #include <stdio.h>
 #include <stdbool.h>
-
-#ifndef __SAMPLE_MAIN_H__
-#ifdef _WIN32
-#include ".\..\src\util\stack_set.h"
-#elif __linux__
-#include "./../src/util/stack_set.h"
-#endif
-#endif
+#include <string.h>
 
 
 void runTest(bool condition, char method_tested[], char test_case[], bool * test_passed);
 void testResult(char test_name[], bool test_passed);
-
-
 
 
 #endif

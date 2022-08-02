@@ -14,6 +14,14 @@
         "test_base.h": "c",
         "stdio.h": "c",
         "nextprime.h": "c",
-        "base.h": "c"
+        "base.h": "c",
+        "project_one.h": "c",
+        "test_stack_set.h": "c",
+        "stack_set.h": "c",
+        "test_findprime.h": "c",
+        "findprime.h": "c",
+        "stdbool.h": "c",
+        "project_two.h": "c",
+        "project_three.h": "c"
     }
 }

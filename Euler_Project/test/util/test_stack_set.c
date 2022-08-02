@@ -409,5 +409,5 @@ void test_3_general_stack_evaluation(){
     // /// Combination Case
 
     /// CLOSING STATEMENTS
-    testResult(test_name, test_passed);
+    // testResult(test_name, test_passed);
 }

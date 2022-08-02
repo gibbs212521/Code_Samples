@@ -1,11 +1,14 @@
 #ifdef _WIN32
-#include "project\test_stack_set.h"
+#include "util\test_stack_set.h"
+#include "util\test_findPrime.h"
 #elif __linux__
-#include "project/test_stack_set.h"
+#include "util/test_stack_set.h"
+#include "util/test_findPrime.h"
 #endif
 
 int main(){
     stack_set_test_suite();
+    prime_test_suite();
 
     return 0;
 }

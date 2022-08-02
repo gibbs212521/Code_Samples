@@ -1,5 +1,5 @@
-#ifndef __TST_project_H__
-#define __TST_project_H__
+#ifndef __TEST_EULER_PROJECT_STACK_H__
+#define __TEST_EULER_PROJECT_STACK_H__
 #ifdef _WIN32
 #include ".\..\test.h"
 #include ".\..\..\src\util\stack_set.h"
@@ -8,7 +8,6 @@
 #include "./../../src/util/stack_set.h"
 #endif
 
-#include <string.h>
 
 
 void stack_set_test_suite();

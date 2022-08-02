@@ -1,5 +1,5 @@
-#ifndef __EULER_PROJECT_BASE_H__
-#define __EULER_PROJECT_BASE_H__
+#ifndef __EULER_PROJECT_STACK_H__
+#define __EULER_PROJECT_STACK_H__
 #define MIN_INT_VAL -2147483648
 #include <stdio.h>
 #include <stdlib.h>
@@ -37,6 +37,7 @@ struct StackHandler
     void (*push)(struct StackHandler * this,
                     int value);
 };
+typedef struct StackHandler stack_handle;
 
 
 void buildFILOStack(struct Stack * this);
