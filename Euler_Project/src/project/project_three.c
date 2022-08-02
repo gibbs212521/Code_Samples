@@ -19,7 +19,7 @@ int getMaxPrimeFactor(stack_handle * stack, int value)
         return 1;
     }
     int end = (int) sqrt(value-1);
-    for (int 2=start; i<end; i++)
+    // for (int 2=start; i<end; i++)
 
     return max_prime;
 }
@@ -31,7 +31,7 @@ int project_3(int max_number)
     int max_prime = 0;
     stack_handle stack;
     initializeStack(&stack);
-    getPrimeFactors(&stack, 600851475143);
+    // getPrimeFactors(&stack, 600851475143); // long long error
 
     printf("\n \tProject 3 solution is : \t%d", stack.pop(&stack));
 
