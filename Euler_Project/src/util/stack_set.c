@@ -32,18 +32,18 @@ void initializeInvStack(struct InvStackHandler * this)
 
 /// StackHandler Methods ///
 
-int __get_top_stack_value__(struct StackHandler * this)
+long __get_top_stack_value__(struct StackHandler * this)
 {
-    int top_value = MIN_INT_VAL; // maximum negative value
+    long top_value = MIN_INT_VAL; // maximum negative value
     if (this->FILO_stack != NULL)
         top_value = this->FILO_stack->data;
 
     return top_value;
 }
 
-int __get_bottom_stack_value__(struct InvStackHandler * this)
+long __get_bottom_stack_value__(struct InvStackHandler * this)
 {
-    int bottom_value = MIN_INT_VAL; // maximum negative value
+    long bottom_value = MIN_INT_VAL; // maximum negative value
     if (this->FIFO_stack != NULL)
         bottom_value = this->FIFO_stack->data;
 
@@ -53,7 +53,7 @@ int __get_bottom_stack_value__(struct InvStackHandler * this)
 
 
 
-void __FILO_stack_push__(struct StackHandler * this, int value)
+void __FILO_stack_push__(struct StackHandler * this, long value)
 {
     stack_ptr pushed_ptr;
 
@@ -79,9 +79,9 @@ void __FILO_stack_push__(struct StackHandler * this, int value)
 
 }
 
-int __FILO_stack_pop__(struct StackHandler * this)
+long __FILO_stack_pop__(struct StackHandler * this)
 {
-    int popped_value;
+    long popped_value;
     stack_ptr popped_ptr;
 
     if (this->FILO_stack == NULL)
@@ -101,7 +101,7 @@ int __FILO_stack_pop__(struct StackHandler * this)
 
 
 
-void __FIFO_stack_push__(struct InvStackHandler * this, int value)
+void __FIFO_stack_push__(struct InvStackHandler * this, long value)
 {
     stack_ptr pushed_ptr;
 
@@ -128,9 +128,9 @@ void __FIFO_stack_push__(struct InvStackHandler * this, int value)
 
 }
 
-int __FIFO_stack_pop__(struct InvStackHandler * this)
+long __FIFO_stack_pop__(struct InvStackHandler * this)
 {
-    int popped_value;
+    long popped_value;
 
     stack_ptr popped_ptr;
 
@@ -171,7 +171,7 @@ void __FILO_stack_shift__(struct StackHandler * this, bool is_to_shift_up)
     read_clipped_end -> store_clipped_end -> Start Parallel Operation:
     read -> store -> verify -> write -> free(store) OPERAND-Function
         OR
-    Parallel Operation: for (int n=1;n<len;n++) Copy(arr[n],arr[n-1])
+    Parallel Operation: for (long n=1;n<len;n++) Copy(arr[n],arr[n-1])
     w/ serial operation.
     A stack shines when you need a simple and fast sequence using either
     FIFO or FILO sequences.
@@ -180,8 +180,8 @@ void __FILO_stack_shift__(struct StackHandler * this, bool is_to_shift_up)
     if (this->bottom_ptr == NULL)
         return; // If the stack is empty, cannot shift
 
-    int popped_value;
-    int temp_popped_value;
+    long popped_value;
+    long temp_popped_value;
 
     stack_ptr popped_ptr;
     stack_ptr rolling_ptr;
@@ -233,7 +233,7 @@ void __FIFO_stack_shift__(struct InvStackHandler * this, bool is_to_shift_down)
     if (this->top_ptr == NULL)
         return; // If the stack is empty, cannot shift
 
-    int popped_value;
+    long popped_value;
 
     struct InvStackHandler *ptr_handle;
 

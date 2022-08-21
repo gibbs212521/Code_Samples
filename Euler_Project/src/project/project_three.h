@@ -4,9 +4,11 @@
 #ifdef _WIN32
 #include ".\..\util\base.h"
 #include ".\..\util\findPrime.h"
+#include ".\..\util\findFactors.h"
 #elif __linux__
 #include "./../util/base.h"
 #include "./../util/findPrime.h"
+#include "./../util/findFactors.h"
 #endif
 
 

@@ -74,7 +74,7 @@ void test_2_find_next_prime(){
     bool condition;
     char test_name[] = "Next Prime Test";
 
-    testResult(test_name,test_passed);
+    // testResult(test_name,test_passed);
 }
 
 void test_3_list_out_primes(){
@@ -82,7 +82,7 @@ void test_3_list_out_primes(){
     bool condition;
     char test_name[] = "List Out Primes Test";
 
-    testResult(test_name,test_passed);
+    // testResult(test_name,test_passed);
 }
 
 void test_4_follows_prime_trends(){
@@ -90,5 +90,5 @@ void test_4_follows_prime_trends(){
     bool condition;
     char test_name[] = "Follow Prime Trends Test";
 
-    testResult(test_name,test_passed);
+    // testResult(test_name,test_passed);
 }

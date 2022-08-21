@@ -50,7 +50,7 @@ void test_1_FILO_stack_evaluation(){
     runTest(condition, method_tested, test_case, &test_passed);
 
     /// CASE 3
-    int top_value = stack.pop(&stack);
+    long top_value = stack.pop(&stack);
 //  strcpy(_t_guide_,"                             ");
     strcpy(test_case,"Stack Pop-Top returns Top    ");
 //  strcpy(_method_guide,"                         ");
@@ -69,7 +69,7 @@ void test_1_FILO_stack_evaluation(){
 
     /// CASE 5
     short depth_goal = 13;
-    for (int i=1; i <= depth_goal; i++)
+    for (long long i=1; i <= depth_goal; i++)
         stack.push(&stack, i);
 //  strcpy(_t_guide_,"                             ");
     strcpy(test_case,"Stack Depth via Push         ");
@@ -82,7 +82,7 @@ void test_1_FILO_stack_evaluation(){
     /// CASE 6
     short depth_start = depth_goal;
     depth_goal = 5;
-    for (int i=depth_start-1; i >= depth_goal; i--)
+    for (long long i=depth_start-1; i >= depth_goal; i--)
         stack.pop(&stack);
 //  strcpy(_t_guide_,"                             ");
     strcpy(test_case,"Stack Depth via Push & Pop   ");
@@ -162,6 +162,9 @@ void test_1_FILO_stack_evaluation(){
 
     /// CLOSING STATEMENTS
     testResult(test_name, test_passed);
+    while (stack.stack_depth)
+        stack.pop(&stack);
+    free(&stack);
 }
 
 void test_2_FIFO_stack_evaluation(){
@@ -192,7 +195,7 @@ void test_2_FIFO_stack_evaluation(){
     runTest(condition, method_tested, test_case, &test_passed);
 
     /// CASE 3
-    int bottom_value = stack.pop(&stack);
+    long bottom_value = stack.pop(&stack);
 //  strcpy(_t_guide_,"                             ");
     strcpy(test_case,"Stack Pop-Bottom returns Bot ");
     strcpy(method_tested,"Stack.pop                ");
@@ -233,8 +236,11 @@ void test_2_FIFO_stack_evaluation(){
 
     /// CASE 7
     depth_start = depth_goal;
-    for (int i=depth_start-1; i >= 0; i--)
+    for (int i=depth_start-1; i >= 0; i--){
         stack.pop(&stack);
+    }
+    /// printf patch only required after implementing factors_test_suite()
+    printf("  \r"); ///Unknown Memory array issue :. printf is slapstick patch
     bottom_value = stack.pop(&stack);
 //  strcpy(_t_guide_,"        \     \                ");
     strcpy(test_case,"Popping \"NULL\" Without Stack ");
@@ -299,6 +305,9 @@ void test_2_FIFO_stack_evaluation(){
 
     /// CLOSING STATEMENTS
     testResult(test_name, test_passed);
+    while (stack.stack_depth)
+        stack.pop(&stack);
+    free(&stack);
 }
 
 void test_3_general_stack_evaluation(){

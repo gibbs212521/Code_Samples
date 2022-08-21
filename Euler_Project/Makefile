@@ -26,7 +26,7 @@ TESTNAME=test_$(FILENAME)
 
 INCL= 
 CC=gcc
-CFLAGS= #-I $(INCL)
+CFLAGS= #--enable-threads  #-I $(INCL)
 
 
 TESTBIN=$(TEST_OBJPATH)$(FD)$(TESTNAME).o
