@@ -34,7 +34,7 @@ int project_2()
         printf("\nProject 2 FAILD TRIVIAL CASE\n");
     int even_fibonacci_sum = 0;
     even_fibonacci_sum = sumFibonacciEvensInRange(4000000);
-    printf("\n \tProject two solution: \t%d",even_fibonacci_sum);
+    printf("\n \tProject two solution : \t%d",even_fibonacci_sum);
 
     return even_fibonacci_sum;
 }
