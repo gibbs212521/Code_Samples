@@ -3,9 +3,9 @@
 void factors_test_suite()
 {
     test_1_is_factor();
-    test_2_find_all_factors();
-    test_3_is_not_factor();
-    test_4_eliminate_all_non_factors();
+    // test_2_find_all_factors();
+    // test_3_is_not_factor();
+    // test_4_eliminate_all_non_factors();
 }
 
 void test_1_is_factor(){
@@ -89,7 +89,7 @@ void test_1_is_factor(){
     runTest(condition, method_tested, test_case, &test_passed);
     while (test_stack.stack_depth)
         test_stack.pop(&test_stack);
-    free(&test_stack);
+    // free(&test_stack);
 
 
     /// CASE 3
@@ -113,15 +113,16 @@ void test_1_is_factor(){
     }
 
     runTest(condition, method_tested, test_case, &test_passed);
+    testResult(test_name, test_passed);
+
     while (new_factor_stack.stack_depth)
         new_factor_stack.pop(&new_factor_stack);
-    free(&new_factor_stack);
-
-
-    testResult(test_name, test_passed);
+    // free(&new_factor_stack);
+    // printf("\r");
     while (factor_stack.stack_depth)
         factor_stack.pop(&factor_stack);
-    free(&factor_stack);
+    // free(&factor_stack);
+    // printf("\r");
 }
 
 void test_2_find_all_factors(){

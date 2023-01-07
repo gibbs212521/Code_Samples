@@ -74,6 +74,7 @@ struct InvStackHandler
     void (*unshift)(struct InvStackHandler * this);  
     void (*push)(struct InvStackHandler * this, long value);
 };
+typedef struct InvStackHandler inv_stack_handle;
 
 
 void buildFIFOStack(struct Stack * this);
