@@ -74,7 +74,7 @@ void test_1_is_factor(){
 
     buildFactorStack(&test_stack, target_number);
     int * test_array = getLCMFactors(&test_stack);
-    int * test_target_array[16] = {2, 2, 2, 2, 2, 2, 3, 3, 3, 5, 5, 11, 17, 37,\
+    int test_target_array[16] = {2, 2, 2, 2, 2, 2, 3, 3, 3, 5, 5, 11, 17, 37,\
         101, 1009};
     // * new_factor_array = getFactorArray(&test_stack, &new_factor_array);
 

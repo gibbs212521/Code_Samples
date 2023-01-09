@@ -2,7 +2,6 @@
 #define __FACTORS_UTIL_H__
 
 #include "base.h"
-#include "stdint.h"
 
 #ifdef _WIN32
 #elif __linux__
