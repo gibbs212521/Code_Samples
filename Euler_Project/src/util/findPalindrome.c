@@ -3,7 +3,7 @@
 long long nextPalindrome(long long current_palindrome){
     /// This function is limited to XXXXXX 3 pair palindromes
     
-    int inner_pair, parital_pair, outter_pair;
+    long long inner_pair, parital_pair, outter_pair;
     long long next_palindrome = current_palindrome;
     outter_pair = next_palindrome % 10;
     next_palindrome = (next_palindrome - outter_pair)/10;
@@ -89,94 +89,32 @@ bool isPalindrome(long long palindrome_candidate){
 /// initial build out has issues with exceeding factor dot-product limit 
 /// prematurely.
 /// Attempted patch is too complicated and not abstract enough.
+//
+/// Plese attempt to functionalize the program.
 ////  PLEASE ANALYZE BEFORE REWRITING  /////
 
-int * getGreatestMultiplePair(uint64_t palindrome, int max_factor_ten_power, \
-        int num_of_factors){
-    /// Build return array
-    int array_depth = num_of_factors;
-    int * arr = (int *) malloc(sizeof(int) * array_depth);
-    int * arr_length = (int *) malloc(sizeof(int) * array_depth);
-    /// Define factors
-    int maximum_factor_size = pow(10,(max_factor_ten_power+1));
-    stack_handle factorStack;
-    initializeStack(&factorStack);
-    buildFactorStack(&factorStack, palindrome);
-    int factor_arr_depth = factorStack.stack_depth;
-    int * factor_array = getLCMFactors(&factorStack);
+    /////   REVAMPED APPROACH
+/*
 
-    /// Fill return array
-    arr_length[0]=0;
-    int running_factor_product = 1;
-    int next_factor_product = 1;
-    int factor_product_indx = 0;
-    int _overflow_flag_ = 0;
-    int indx;
-    for (indx=0; indx < factor_arr_depth; indx++)
+Build combination set with X depth
+
+*/
+void comboProdBuild(int max_var, int * product_array, int array_depth){
+    int array_counter = array_depth;
+    int array_indx = 0;
+    if (array_counter == 0)
+        return;
+    for (int i = max_var; i > 0 ; i--)
     {
-        next_factor_product *= factor_array[indx];
-        if (next_factor_product >= maximum_factor_size){
-            if (factor_product_indx == (array_depth-1)){
-                /// overflow protocol
-                arr[factor_product_indx] = next_factor_product;
-                printf("\n--------\t %d input into %drd arrray", running_factor_product,\
-                 factor_product_indx);
-                _overflow_flag_ = 1;
-            } else {
-                printf("\n--------\t %d input into %drd arrray", running_factor_product,\
-                 factor_product_indx);
-                printf("\n%d is max factor size", maximum_factor_size);
-                arr[factor_product_indx] = running_factor_product;
-                factor_product_indx++;
-                next_factor_product = factor_array[indx];
-                arr_length[factor_product_indx]=0;
-        }}
-        running_factor_product = next_factor_product;
-        arr_length[factor_product_indx]++;
-    }
-    if (running_factor_product > maximum_factor_size)
-                    _overflow_flag_ = 1;
-    // printf("\n|-------\t %d input into %drd arrray", running_factor_product, factor_product_indx);
-    // arr[factor_product_indx] = running_factor_product;
-    
-
-    /// balancing arrays
-    int array_A_len = arr_length[0] - 1;
-    int array_B_len = arr_length[1] - 1;
-    int rerun_limit = 10;
-    int rerun_indx = 0;
-    int sub_indx = 0;
-    int factor_indx = 0;
-    stack_handle factorStack_A, factorStack_B;
-    int * factors_A, * factors_B;
-    int swapping_A, swapping_B;
-
-    printf("\n\n%d,\n\n",_overflow_flag_);
-    while((rerun_indx < rerun_limit) && _overflow_flag_)
-    {
-        buildFactorStack(&factorStack_A, arr[0]);
-        buildFactorStack(&factorStack_B, arr[1]);
-        factors_A = getLCMFactors(&factorStack_A);
-        factors_B = getLCMFactors(&factorStack_B);
-        if (rerun_indx == 0){
-            swapping_A = factors_A[array_A_len];
-            swapping_B = factors_B[array_B_len];
-            factors_A[array_A_len] = swapping_B;
-            factors_B[array_B_len] = swapping_A;
-            if ((dotProductFactorArray(factors_A, array_A_len) > maximum_factor_size) \
-                || (dotProductFactorArray(factors_B, array_B_len) > maximum_factor_size))
-                _overflow_flag_ = 1;
-            else {
-                _overflow_flag_ = 0;
-                arr[0] = dotProductFactorArray(factors_A, array_A_len);
-                arr[1] = dotProductFactorArray(factors_B, array_B_len);
-            }
+        for (int j = i; j > 0; j--)
+        {
+            product_array[array_indx] = i * j;
+            array_counter--;
+            if (array_counter == 0)
+                return;
+            array_indx++;
         }
-        rerun_indx++;
     }
     
-
-    return arr;
-
 }
 

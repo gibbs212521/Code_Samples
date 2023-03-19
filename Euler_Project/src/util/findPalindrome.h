@@ -11,7 +11,6 @@
 
 bool isPalindrome(long long palindrome_candidate);
 long long nextPalindrome(long long current_palindrome);
-int * getGreatestMultiplePair(uint64_t palindrome, int max_factor_ten_power, \
-    int num_of_factors);
+void comboProdBuild(int max_var, int * product_array, int array_depth);
 
 #endif

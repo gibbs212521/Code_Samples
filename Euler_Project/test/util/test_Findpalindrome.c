@@ -68,95 +68,57 @@ void test_1_is_palindrome(){
             condition = false;
         };
     }
-
-    /// CASE 4
-//  strcpy(_t_guide_,"                             ");
-    strcpy(test_case,"Get Palindrome Factors       ");
-    strcpy(method_tested,"getGreatestMultiplePair  ");
-    condition = true;
-    //// additional case required to test boundry conditions where factors exceed maximum factor magnitude.
-
-    /// trivial cases:
-    // 1)  99 * 91 = 9009
-    // 2) 101 * 99 = 9999
-    // 3) 902 x 909 = 819918
-    // 4) 919 * 1001 = 919919
-
-
-    uint64_t palindrome = 919919;
-    int * test_arr;
-    int indx;
-
-
-    // trival cases 1 & 2
-    /// trivial cases:
-    // 1)  99 * 91 = 9009
-    int max_ten_power;
-    int max_num_of_factors;
-    uint64_t provide_palindrome = 9009;
-    uint16_t running_product = 1;
-   
-    max_ten_power = 1;
-    max_num_of_factors = 2;
-    provide_palindrome = 9009;
-    test_arr = getGreatestMultiplePair(provide_palindrome, max_ten_power, \
-        max_num_of_factors);
-    running_product = 1;
-    for (indx=0; indx<max_num_of_factors; indx++){
-        running_product *= (uint64_t) test_arr[indx];
-        printf("\n%d -- %lu",test_arr[indx], running_product);
-    }
-    if (running_product != provide_palindrome)
-        condition = false;
-   
-    /// trivial cases:
-    // 2) 101 * 99 = 9999
-    max_ten_power = 1;
-    max_num_of_factors = 2;
-    provide_palindrome = 9999;
-    test_arr = getGreatestMultiplePair(provide_palindrome, max_ten_power, \
-        max_num_of_factors);
-    running_product = 1;
-    for (indx=0; indx<max_num_of_factors; indx++){
-        running_product *= test_arr[indx];
-        printf("\n%d -- %lu",test_arr[indx], running_product);
-    }
-    if (running_product != provide_palindrome)
-        condition = false;
-
-    /// trivial cases:
-    // 3) 902 x 909 = 819918
-    max_ten_power = 2;
-    max_num_of_factors = 2;
-    provide_palindrome = 819918;
-    test_arr = getGreatestMultiplePair(provide_palindrome, max_ten_power, \
-        max_num_of_factors);
-    running_product = 1;
-    for (indx=0; indx<max_num_of_factors; indx++){
-        running_product *= test_arr[indx];
-        printf("\n%d -- %lu",test_arr[indx], running_product);
-    }
-    if (running_product != provide_palindrome)
-        condition = false;
-
-
-    /// trivial cases:
-    // 4) 919 * 1001 = 919919
-    max_ten_power = 2;
-    max_num_of_factors = 2;
-    provide_palindrome = 919919;
-    test_arr = getGreatestMultiplePair(provide_palindrome, max_ten_power, \
-        max_num_of_factors);
-    running_product = 1;
-    for (indx=0; indx<max_num_of_factors; indx++){
-        running_product *= (uint64_t) test_arr[indx];
-        printf("\n%d -- %lu",test_arr[indx], running_product);
-    }
-    if (running_product != provide_palindrome){
-        condition = false;
-    }
-
     runTest(condition, method_tested, test_case, &test_passed);
+
+
+    /// Case 4
+//  strcpy(_t_guide_,"                             ");
+    strcpy(test_case,"Test Combinations            ");
+    strcpy(method_tested,"comboProdBuild function  ");
+    condition = true;
+
+    // trivial case
+    int combo_5_5[15]= {25,20,15,10,5,16,12,8,4,9,6,3,4,2,1};
+    int test_combo_5_5[15];
+
+    comboProdBuild(5, &test_combo_5_5,15);
+    for (int i=0; i < 15; i++)
+    {
+        if (combo_5_5[i] != test_combo_5_5[i])
+            condition = false;
+    }
+    runTest(condition, method_tested, test_case, &test_passed);
+
+//     /// Case 5
+// //  strcpy(_t_guide_,"                             ");
+//     strcpy(test_case,"Final Test                   ");
+//     strcpy(method_tested,"findMaxPalindrome funct  ");
+//     condition = true;
+
+//     int max_var = 999;
+//     int arr_depth = 100000;
+//     int * palindrome_array[100000];
+//     int test_is_palindrome = 0;
+//     int test_indx = 0;
+//     int max_palindrome_tested = 0;
+
+//     comboProdBuild(max_var, &palindrome_array,arr_depth);
+
+//     while (test_is_palindrome == 0)
+//     {
+//         if (test_indx == arr_depth)
+//             break;
+//         if (isPalindrome(palindrome_array[test_indx]))
+//         {
+//             if (palindrome_array[test_indx] > max_palindrome_tested)
+//                 max_palindrome_tested = palindrome_array[test_indx];
+//         }
+//         test_indx++;
+//     }
+
+//     printf("\n\n%d\n%d\n\n",max_palindrome_tested,test_indx);
+
+//     runTest(condition, method_tested, test_case, &test_passed);
 
     testResult(test_name,test_passed);
 }

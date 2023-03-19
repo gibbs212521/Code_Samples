@@ -26,7 +26,7 @@ Find the largest palindrome made from the product of two 3-digit numbers.
 
 
 */
-long long project_4(long long maximum_palindrome);
+int project_4();
 int project_four_test();
 
 
