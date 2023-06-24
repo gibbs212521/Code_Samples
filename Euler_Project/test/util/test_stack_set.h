@@ -18,7 +18,8 @@ void linked_list_test_suite();
 void test_1_FILO_stack_evaluation();
 void test_2_FIFO_stack_evaluation();
 void test_3_general_stack_evaluation();
-
+void test_4_binary_FILO_stack_evaluation();
+void test_5_binary_FIFO_stack_evaluation();
 
 
 #endif

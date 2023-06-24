@@ -14,5 +14,8 @@ long findNextPrimeNumber(long current_prime_number);
 bool brute_force_prime(long integer);
 bool isPrime(long integer);
 
+bool setPrimeListUint(unsigned long * prime_list, unsigned long array_length);
+bool brute_force_prime_uint(unsigned long integer);
+bool isPrimeUint(unsigned long integer);
 
 #endif

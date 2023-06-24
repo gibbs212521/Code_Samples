@@ -17,6 +17,9 @@ void test_2_find_next_prime();
 void test_3_list_out_primes();
 void test_4_follows_prime_trends();
 
+void test_1_uint_is_number_prime();
+void test_2_uint_list_out_primes();
+void test_3_uint_follows_prime_trends();
 
 
 

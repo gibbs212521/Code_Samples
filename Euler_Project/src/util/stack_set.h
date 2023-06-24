@@ -88,5 +88,95 @@ void __FIFO_stack_shift__(struct InvStackHandler * this, bool is_to_shift_down);
 void __FIFO_stack_shift_down__(struct InvStackHandler * this);
 void __FIFO_stack_shift_up__(struct InvStackHandler * this);
 
+// /********************************************************************/ //
+// /**********************  BINARY SERIES    ***************************/ //
+// /********************************************************************/ //
+
+struct Stack_Bin
+{
+    unsigned long data;
+    struct Stack_Bin * bin_next_ptr;
+};
+typedef struct Stack_Bin *bin_stack_ptr;
+
+
+typedef struct Stack *stack_ptr;
+
+
+struct StackBinHandler
+{
+    /// Class Variables
+    // unsigned long top_value;   // Top Stack_Bin Vector Data w/out popping stack
+        //// TODO: top_value should not be callable; utilize a getter method
+        //          in order to compensate for NULL Vector
+    unsigned long bottom;
+    unsigned long stack_depth;
+    short _shift_state;  // DEV PLACEHOLDEER 
+
+    /// Class Pointers
+    struct Stack_Bin * FILO_stack;
+    struct Stack_Bin * bottom_ptr;
+    
+    /// Class Method Vectors
+    unsigned long (*getTopValue)(struct StackBinHandler * this);
+    unsigned long (*pop)(struct StackBinHandler * this);
+    void (*shift)(struct StackBinHandler * this);
+    void (*unshift)(struct StackBinHandler * this);  
+    void (*push)(struct StackBinHandler * this, unsigned long value);
+};
+typedef struct StackBinHandler stackBin_handle;
+
+
+void _bin_buildFILOStack(struct Stack_Bin * this);
+void _bin_initializeStack(struct StackBinHandler * this);
+
+unsigned long _bin___get_top_stack_value__(struct StackBinHandler * this);
+void _bin___FILO_stack_push__(struct StackBinHandler * this, unsigned long value);
+unsigned long _bin___FILO_stack_pop__(struct StackBinHandler * this);
+void _bin___FILO_stack_shift__(struct StackBinHandler * this, bool is_to_shift_up);
+
+void _bin___FILO_stack_shift_up__(struct StackBinHandler * this);
+void _bin___FILO_stack_shift_down__(struct StackBinHandler * this);
+
+
+
+struct InvStackBinHandler
+{
+    /// Class Variables
+    // unsigned long top_value;   // Top Stack_Bin Vector Data w/out popping stack
+        //// TODO: top_value should not be callable; utilize a getter method
+        //          in order to compensate for NULL Vector
+    unsigned long top;
+    unsigned long stack_depth;
+    short _shift_state;  // DEV PLACEHOLDEER --> delete once testing is complete
+
+    /// Class Pointers
+    // struct Stack_Bin * FILO_stack;
+    struct Stack_Bin * FIFO_stack;
+    struct Stack_Bin * top_ptr;
+    
+    /// Class Method Vectors
+    unsigned long (*getBottomValue)(struct InvStackBinHandler * this);
+    unsigned long (*pop)(struct InvStackBinHandler * this);
+    void (*shift)(struct InvStackBinHandler * this);
+    void (*unshift)(struct InvStackBinHandler * this);  
+    void (*push)(struct InvStackBinHandler * this, unsigned long value);
+};
+typedef struct InvStackBinHandler _bin_inv_stack_handle;
+
+
+void _bin_buildFIFOStack(struct Stack_Bin * this);
+void _bin_initializeInvStack(struct InvStackBinHandler * this);
+
+unsigned long _bin___get_bottom_stack_value__(struct InvStackBinHandler * this);
+void _bin___FIFO_stack_push__(struct InvStackBinHandler * this, unsigned long value);
+unsigned long _bin___FIFO_stack_pop__(struct InvStackBinHandler * this);
+void _bin___FIFO_stack_shift__(struct InvStackBinHandler * this, bool is_to_shift_down);
+
+void _bin___FIFO_stack_shift_down__(struct InvStackBinHandler * this);
+void _bin___FIFO_stack_shift_up__(struct InvStackBinHandler * this);
+
+
+
 
 #endif

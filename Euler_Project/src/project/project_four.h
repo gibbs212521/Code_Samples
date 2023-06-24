@@ -5,10 +5,12 @@
 #include ".\..\util\base.h"
 #include ".\..\util\findPalindrome.h"
 #include ".\..\util\findFactors.h"
+#include ".\..\util\findPrime.h"
 #elif __linux__
 #include "./../util/base.h"
 #include "./../util/findPalindrome.h"
 #include "./../util/findFactors.h"
+#include "./../util/findPrime.h"
 #endif
 
 /*

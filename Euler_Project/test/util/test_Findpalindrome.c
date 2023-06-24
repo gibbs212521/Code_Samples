@@ -81,44 +81,13 @@ void test_1_is_palindrome(){
     int combo_5_5[15]= {25,20,15,10,5,16,12,8,4,9,6,3,4,2,1};
     int test_combo_5_5[15];
 
-    comboProdBuild(5, &test_combo_5_5,15);
+    comboProdBuild(5, &test_combo_5_5, 15);
     for (int i=0; i < 15; i++)
     {
         if (combo_5_5[i] != test_combo_5_5[i])
             condition = false;
     }
     runTest(condition, method_tested, test_case, &test_passed);
-
-//     /// Case 5
-// //  strcpy(_t_guide_,"                             ");
-//     strcpy(test_case,"Final Test                   ");
-//     strcpy(method_tested,"findMaxPalindrome funct  ");
-//     condition = true;
-
-//     int max_var = 999;
-//     int arr_depth = 100000;
-//     int * palindrome_array[100000];
-//     int test_is_palindrome = 0;
-//     int test_indx = 0;
-//     int max_palindrome_tested = 0;
-
-//     comboProdBuild(max_var, &palindrome_array,arr_depth);
-
-//     while (test_is_palindrome == 0)
-//     {
-//         if (test_indx == arr_depth)
-//             break;
-//         if (isPalindrome(palindrome_array[test_indx]))
-//         {
-//             if (palindrome_array[test_indx] > max_palindrome_tested)
-//                 max_palindrome_tested = palindrome_array[test_indx];
-//         }
-//         test_indx++;
-//     }
-
-//     printf("\n\n%d\n%d\n\n",max_palindrome_tested,test_indx);
-
-//     runTest(condition, method_tested, test_case, &test_passed);
 
     testResult(test_name,test_passed);
 }

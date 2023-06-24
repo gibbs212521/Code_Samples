@@ -78,7 +78,7 @@ bool isPalindrome(long long palindrome_candidate){
         most_significant_value_stack.pop(&most_significant_value_stack);
     // free(&most_significant_value_stack);
     while (least_significant_value_stack.stack_depth)
-        most_significant_value_stack.pop(&least_significant_value_stack);
+        least_significant_value_stack.pop(&least_significant_value_stack);
     // free(&least_significant_value_stack);
     ///     END OF GARBAGE COLLECTION ///
 
