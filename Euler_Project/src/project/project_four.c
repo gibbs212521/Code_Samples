@@ -38,13 +38,15 @@ int project_4()
 
     printf("\n \tProject 6 solution : \t%lld (impromptu)", summed_difference);
 
-    unsigned long max_prime_count = 10010;
-    unsigned long prime_list[10010] = {};
-    setPrimeListUint(prime_list, max_prime_count);
-    unsigned long last_prime = prime_list[10000];
+    // unsigned long max_prime_count = 10010;
+    // unsigned long prime_list[10010] = {};
+    // setPrimeListUint(prime_list, max_prime_count);
+    // unsigned long last_prime = prime_list[10000];
 
-    printf("\n \tProject 7 solution : \t%lu @ 10001 primes",last_prime);
-
+    // printf("\n \tProject 7 solution : \t%lu @ 10001 primes",last_prime);
+/// Skiped to save memory and time
+    printf("\n \tProject 7 solution : \t%lu @ 10001 primes",104743);
+//104743 solution found in initial build and run
 
     
 
